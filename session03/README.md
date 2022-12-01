@@ -8,6 +8,9 @@
 3. Remove the recurrent folders. The structure should like like the following 
 
 ``` 
+train.py
+test.py
+...
 data
 └───catsDogs
 │   └───trainings_set
@@ -27,6 +30,8 @@ data
    1. We need a validation set. For that we will split the data in /training_set into two parts.
    2. We want to have 80% of the images in the /training_set folder and 20% in a new folder called /validation_set.
    3. If you navigate to the /data folder in the terminal you can use the `train_val_split.sh` script to do so.
+      You can execute such a bash script with `bash train_val_split.sh` in the terminal. 
+      Feel free to also move the file in a different way.
    4. After this step your structure should look as follows:
 ``` 
 data

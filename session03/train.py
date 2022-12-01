@@ -3,13 +3,13 @@ from torch import nn
 from torch import optim
 from torchvision import datasets, transforms, models
 
-import utils.glob as CDglobs
+import utils.transformations as transformation
 import utils.utils as Utils
 import pathlib
 
 
 if __name__ == '__main__':
-    train_data = datasets.ImageFolder('data/catsDogs/training_set', transform=CDglobs.train_transforms)
+    train_data = datasets.ImageFolder('data/catsDogs/training_set', transform=transformation.train_transforms)
     # Utils.imshow(train_data[3201][0])
     train_loader = torch.utils.data.DataLoader(dataset=train_data, batch_size=100, shuffle=True)
 

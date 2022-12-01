@@ -2,11 +2,11 @@ import pathlib
 import torch
 from torch import nn
 from torchvision import datasets, transforms, models
-import session03.utils.glob as CDglobs
+import utils.transformations as transformation
 
 
 if __name__ == '__main__':
-    val_data = datasets.ImageFolder('data/catsDogs/validation_set', transform=CDglobs.test_transforms)
+    val_data = datasets.ImageFolder('data/catsDogs/validation_set', transform=transformation.test_transforms)
     val_loader = torch.utils.data.DataLoader(dataset=val_data, batch_size=100, shuffle=False)
 
     model = models.resnet18(pretrained=True)
