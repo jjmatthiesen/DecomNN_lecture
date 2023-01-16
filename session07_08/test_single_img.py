@@ -38,6 +38,8 @@ if __name__ == '__main__':
     # predict the class for image
     pred = model(img)
     # print class in words
-    print("predicted label: " + ("dog" if int(pred.argmax(dim=1)==1) else "cat"))
+    pred_label = ("dog" if int(pred.argmax(dim=1)==1) else "cat")
+    print("predicted label: " + pred_label)
     # print true label in words
     print("true label: " + ("dog" if int(exp_label == 1) else "cat"))
+    Utils.imshow(inputs[idx], title=pred_label)
