@@ -6,6 +6,10 @@ import session03.utils.glob as CDglobs
 import session03.utils.utils as Utils
 
 if __name__ == '__main__':
+    seed = 42
+    torch.manual_seed(seed)
+    torch.use_deterministic_algorithms(True)
+
     val_data = datasets.ImageFolder('../session03/data/catsDogs/validation_set', transform=CDglobs.test_transforms)
     val_loader = torch.utils.data.DataLoader(dataset=val_data, batch_size=100, shuffle=True)
 
@@ -43,3 +47,4 @@ if __name__ == '__main__':
     # print true label in words
     print("true label: " + ("dog" if int(exp_label == 1) else "cat"))
     Utils.imshow(inputs[idx], title=pred_label)
+    print("End")

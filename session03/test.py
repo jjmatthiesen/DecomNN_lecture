@@ -2,12 +2,16 @@ import pathlib
 import torch
 from torch import nn
 from torchvision import datasets, transforms, models
-import utils.transformations as transformation
-
+import session03.utils.glob as CDglobs
+import session03.utils.utils as Utils
 
 if __name__ == '__main__':
-    val_data = datasets.ImageFolder('data/catsDogs/validation_set', transform=transformation.test_transforms)
-    val_loader = torch.utils.data.DataLoader(dataset=val_data, batch_size=100, shuffle=False)
+    seed = 42
+    torch.manual_seed(seed)
+    torch.use_deterministic_algorithms(True)
+
+    val_data = datasets.ImageFolder('data/catsDogs/validation_set', transform=CDglobs.test_transforms)
+    val_loader = torch.utils.data.DataLoader(dataset=val_data, batch_size=100, shuffle=True)
 
     model = models.resnet18(pretrained=True)
     model.fc = nn.Linear(in_features=512, out_features=2, bias=True)
@@ -32,8 +36,13 @@ if __name__ == '__main__':
         for data, label in val_loader:
             data = data.to(device)
             label = label.to(device)
+            Utils.imshow(data[0])
 
             val_output = model(data)
+
+            # get max of each prediction
+            Utils.plot_wrong_pred_images(val_output, data, label)
+
             val_loss = criterion(val_output, label)
 
             acc = ((val_output.argmax(dim=1) == label).float().mean())
@@ -47,4 +56,3 @@ if __name__ == '__main__':
                 f'{"test_transforms"}, {epoch_val_accuracy}, {epoch_val_loss} \n')
         # resnet18_lr_0.001_pretrained_true_bs100_ep_5_augm: val_accuracy : 0.9617645740509033, val_loss : 0.10223330557346344
         # resnet18_lr_0.001_pretrained_false_bs100_ep_5_augm: val_accuracy : 0.6747059226036072, val_loss : 0.5825079083442688
-
