@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import torch
 
 
 def imshow(image, ax=None, title=None, normalize=False):
@@ -22,3 +23,13 @@ def imshow(image, ax=None, title=None, normalize=False):
     ax.set_xticklabels('')
     ax.set_yticklabels('')
     plt.show()
+
+def plot_wrong_pred_images(val_output, data, label):
+    pred_labels = []
+    for pred in val_output:
+        pred_labels.append(int(torch.argmax(pred)))
+    diff = torch.sub(torch.tensor(pred_labels), label)
+    for ind, d in enumerate(diff):
+        if d == -1:
+            title = "cat" if pred_labels[ind] == 0 else "dog"
+            imshow(data[ind], title=title)
